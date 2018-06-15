@@ -15,8 +15,8 @@ import {
   Image
 } from 'react-native'
 
-let windowWidth = Dimensions.get('window').width
-let windowHeight = Dimensions.get('window').height
+var windowWidth = Dimensions.get('window').width
+var windowHeight = Dimensions.get('window').height
 
 class MessageBar extends Component {
   constructor (props) {
@@ -434,6 +434,10 @@ class MessageBar extends Component {
   */
 
   render () {
+    
+    var windowWidth = Dimensions.get('window').width
+    var windowHeight = Dimensions.get('window').height
+
     // Set the animation transformation depending on the chosen animationType, or depending on the state's position if animationType is not overridden
     this._applyAnimationTypeTransformation()
 

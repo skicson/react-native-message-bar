@@ -15,8 +15,8 @@ import {
   Image
 } from 'react-native'
 
-var windowWidth = Dimensions.get('window').width
-var windowHeight = Dimensions.get('window').height
+let windowWidth = Dimensions.get('window').width
+let windowHeight = Dimensions.get('window').height
 
 class MessageBar extends Component {
   constructor (props) {
@@ -29,6 +29,18 @@ class MessageBar extends Component {
 
     this.state = this.getStateByProps(props)
     this.defaultState = this.getStateByProps(props)
+  }
+
+  componentWillMount() {
+    Dimensions.addEventListener("change", this.screenDimensionUpdateTracker);
+  }
+
+  screenDimensionUpdateTracker = (screenDimension) => {
+    this.setState({screenDimension: screenDimension});
+  }
+
+  componentWillUnmount() {
+    Dimensions.removeEventListener("change", this.screenDimensionUpdateTracker);
   }
 
   componentDidMount () {
@@ -176,7 +188,8 @@ class MessageBar extends Component {
 
       /* Position of the alert and Animation Type the alert is shown */
       position: props.position || def.position || 'top',
-      animationType: props.animationType || def.animationType
+      animationType: props.animationType || def.animationType,
+      screenDimension: Dimensions.get('window'),
     }
   }
 
@@ -435,8 +448,8 @@ class MessageBar extends Component {
 
   render () {
     
-    var windowWidth = Dimensions.get('window').width
-    var windowHeight = Dimensions.get('window').height
+    windowHeight = Dimensions.get('window').height
+    windowWidth = Dimensions.get('window').width
 
     // Set the animation transformation depending on the chosen animationType, or depending on the state's position if animationType is not overridden
     this._applyAnimationTypeTransformation()
